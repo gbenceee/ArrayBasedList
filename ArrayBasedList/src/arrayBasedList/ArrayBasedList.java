@@ -1,8 +1,6 @@
 package arrayBasedList;
 
-import java.util.Iterator;
-
-public class ArrayBasedList implements List {
+public class ArrayBasedList implements Listt {
 
 	private int size;
 	private int[] arrayBasedList;
@@ -43,15 +41,28 @@ public class ArrayBasedList implements List {
 	}
 
 	@Override
-	public void delete(int number) {// nem jó
-		for (int i = 0; i < arrayBasedList.length && isModified[i] == true; i++) {
+	public void delete(int number) {
+		int indexOfLastElement = 0;
+		outer: for (int i = 0; i < arrayBasedList.length && isModified[i] == true; i++) {
 			if (number == arrayBasedList[i] && isModified[i] == true) {
-				for (int j = i; arrayBasedList[j] == number && isModified[j] == true; j++) {
-					if (arrayBasedList[j] != number) {
-						arrayBasedList[i] = arrayBasedList[j];
-					}
+				for (int j = i; j < arrayBasedList.length && isModified[j] == true; j++) {
+					arrayBasedList[j] = arrayBasedList[j + 1];
+					indexOfLastElement = j;
 				}
+				isModified[indexOfLastElement] = false;
+				size--;
+				break outer;
 			}
+		}
+		if (size < arrayBasedList.length / 2) {
+			int[] newArrayBasedList = new int[arrayBasedList.length / 2];
+			boolean[] newIsModified = new boolean[arrayBasedList.length / 2];
+			for (int i = 0; i < arrayBasedList.length && isModified[i] == true; i++) {
+				newArrayBasedList[i] = arrayBasedList[i];
+				newIsModified[i] = isModified[i];
+			}
+			arrayBasedList = newArrayBasedList;
+			isModified = newIsModified;
 		}
 	}
 

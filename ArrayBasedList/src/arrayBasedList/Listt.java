@@ -1,6 +1,6 @@
 package arrayBasedList;
 
-public interface List {
+public interface Listt {
 
 	public boolean add(int number);
 

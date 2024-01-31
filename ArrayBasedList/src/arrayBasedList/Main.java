@@ -14,6 +14,15 @@ public class Main {
 			arrayBasedList.add(1);
 		}
 		arrayBasedList.add(99);
+		System.out.println(arrayBasedList.getElementsAsString());
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
+		arrayBasedList.delete(1);
 		arrayBasedList.delete(1);
 
 		System.out.println(arrayBasedList.getElementsAsString());
