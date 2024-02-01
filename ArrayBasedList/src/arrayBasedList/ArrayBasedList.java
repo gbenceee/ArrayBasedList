@@ -1,39 +1,30 @@
 package arrayBasedList;
 
-public class ArrayBasedList implements Listt {
+public class ArrayBasedList implements List {
 
 	private int size;
-	private int[] arrayBasedList;
-	private boolean[] isModified;
-
-	public ArrayBasedList() {
-		this.arrayBasedList = new int[10];
-		this.isModified = new boolean[arrayBasedList.length];
-	}
+	private int[] arrayBasedList = new int[10];
 
 	@Override
 	public boolean add(int number) {
-		if (size >= arrayBasedList.length) {
-			int[] newArrayBasedList = new int[arrayBasedList.length * 2];
-			boolean[] newIsModified = new boolean[newArrayBasedList.length];
-			for (int i = 0; i < arrayBasedList.length; i++) {
-				newArrayBasedList[i] = arrayBasedList[i];
-				newIsModified[i] = isModified[i];
-			}
-			size = arrayBasedList.length;
-			arrayBasedList = newArrayBasedList;
-			isModified = newIsModified;
-		}
+		increaseArrayBasedListSizeIfNecessary();
 		arrayBasedList[size] = number;
-		isModified[size] = true;
 		size++;
 		return !contains(number);
 	}
 
+	private void increaseArrayBasedListSizeIfNecessary() {
+		if (size >= arrayBasedList.length) {
+			int[] newArrayBasedList = new int[arrayBasedList.length * 2];
+			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, arrayBasedList.length);
+			arrayBasedList = newArrayBasedList;
+		}
+	}
+
 	@Override
 	public boolean contains(int number) {
-		for (int i = 0; i < arrayBasedList.length; i++) {
-			if (arrayBasedList[i] == number && isModified[i] == true) {
+		for (int i = 0; i < size; i++) {
+			if (arrayBasedList[i] == number) {
 				return true;
 			}
 		}
@@ -42,39 +33,34 @@ public class ArrayBasedList implements Listt {
 
 	@Override
 	public void delete(int number) {
-		int indexOfLastElement = 0;
-		outer: for (int i = 0; i < arrayBasedList.length && isModified[i] == true; i++) {
-			if (number == arrayBasedList[i] && isModified[i] == true) {
-				for (int j = i; j < arrayBasedList.length && isModified[j] == true; j++) {
+		for (int i = 0; i < size; i++) {
+			if (number == arrayBasedList[i]) {
+				for (int j = i; j < size - 1; j++) {
 					arrayBasedList[j] = arrayBasedList[j + 1];
-					indexOfLastElement = j;
 				}
-				isModified[indexOfLastElement] = false;
 				size--;
-				break outer;
+				i--;
 			}
 		}
+		decreaseArrayBasedListSizeIfNecessary();
+	}
+
+	private void decreaseArrayBasedListSizeIfNecessary() {
 		if (size < arrayBasedList.length / 2) {
 			int[] newArrayBasedList = new int[arrayBasedList.length / 2];
+			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, newArrayBasedList.length);
 			boolean[] newIsModified = new boolean[arrayBasedList.length / 2];
-			for (int i = 0; i < arrayBasedList.length && isModified[i] == true; i++) {
-				newArrayBasedList[i] = arrayBasedList[i];
-				newIsModified[i] = isModified[i];
-			}
 			arrayBasedList = newArrayBasedList;
-			isModified = newIsModified;
 		}
 	}
 
 	@Override
 	public String getElementsAsString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(isModified[0] == true ? arrayBasedList[0] : "");
-		for (int i = 1; i < arrayBasedList.length; i++) {
-			if (isModified[i] == true) {
-				builder.append(" - ").append(arrayBasedList[i]);
-			}
+		for (int i = 0; i < size - 1; i++) {
+			builder.append(arrayBasedList[i]).append(" - ");
 		}
+		builder.append(arrayBasedList[size - 1]);
 		return builder.toString();
 	}
 
