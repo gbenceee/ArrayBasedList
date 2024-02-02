@@ -37,6 +37,16 @@ public class OrderedArrayBasedList implements InitList {
 
 	@Override
 	public void delete(int number) {
+		decreaseSizeIfNecessary();
+		for (int i = 0; i < size; i++) {
+			if (number == orderedArrayBasedList[i]) {
+				for (int j = i; j < size - 1; j++) {
+					orderedArrayBasedList[j] = orderedArrayBasedList[j + 1];
+				}
+				size--;
+				i--;
+			}
+		}
 	}
 
 	@Override
@@ -59,6 +69,15 @@ public class OrderedArrayBasedList implements InitList {
 	private void increaseSizeIfNecessary() {
 		if (size >= orderedArrayBasedList.length) {
 			int[] newOrderedArrayBaseList = new int[orderedArrayBasedList.length * 2];
+			System.arraycopy(orderedArrayBasedList, 0, newOrderedArrayBaseList, 0, size);
+			orderedArrayBasedList = newOrderedArrayBaseList;
+		}
+
+	}
+
+	private void decreaseSizeIfNecessary() {
+		if (size < orderedArrayBasedList.length / 2) {
+			int[] newOrderedArrayBaseList = new int[orderedArrayBasedList.length / 2];
 			System.arraycopy(orderedArrayBasedList, 0, newOrderedArrayBaseList, 0, size);
 			orderedArrayBasedList = newOrderedArrayBaseList;
 		}
