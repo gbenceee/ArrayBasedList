@@ -1,6 +1,8 @@
 package arrayBasedList;
 
-public class ArrayBasedList implements List {
+import list.InitList;
+
+public class ArrayBasedList implements InitList {
 
 	private int size;
 	private int[] arrayBasedList = new int[10];
@@ -49,7 +51,6 @@ public class ArrayBasedList implements List {
 		if (size < arrayBasedList.length / 2) {
 			int[] newArrayBasedList = new int[arrayBasedList.length / 2];
 			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, newArrayBasedList.length);
-			boolean[] newIsModified = new boolean[arrayBasedList.length / 2];
 			arrayBasedList = newArrayBasedList;
 		}
 	}
@@ -60,16 +61,15 @@ public class ArrayBasedList implements List {
 		for (int i = 0; i < size - 1; i++) {
 			builder.append(arrayBasedList[i]).append(" - ");
 		}
-		builder.append(arrayBasedList[size - 1]);
+		if (size > 0) {
+			builder.append(arrayBasedList[size - 1]);
+		}
 		return builder.toString();
 	}
 
+	@Override
 	public int getSize() {
 		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
 	}
 
 }
