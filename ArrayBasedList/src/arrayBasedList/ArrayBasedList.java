@@ -4,18 +4,18 @@ import list.IntList;
 
 public class ArrayBasedList implements IntList {
 
-	private int size;
-	private int[] arrayBasedList = new int[10];
+	protected int size;
+	protected int[] arrayBasedList = new int[10];
 
 	@Override
 	public boolean add(int number) {
-		increaseArrayBasedListSizeIfNecessary();
+		increaseListSizeIfNecessary();
 		arrayBasedList[size] = number;
 		size++;
 		return !contains(number);
 	}
 
-	private void increaseArrayBasedListSizeIfNecessary() {
+	protected void increaseListSizeIfNecessary() {
 		if (size >= arrayBasedList.length) {
 			int[] newArrayBasedList = new int[arrayBasedList.length * 2];
 			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, arrayBasedList.length);
@@ -40,17 +40,18 @@ public class ArrayBasedList implements IntList {
 				for (int j = i; j < size - 1; j++) {
 					arrayBasedList[j] = arrayBasedList[j + 1];
 				}
+				arrayBasedList[size - 1] = 0;
 				size--;
 				i--;
 			}
 		}
-		decreaseArrayBasedListSizeIfNecessary();
+		decreaseListSizeIfNecessary();
 	}
 
-	private void decreaseArrayBasedListSizeIfNecessary() {
+	protected void decreaseListSizeIfNecessary() {
 		if (size < arrayBasedList.length / 2) {
 			int[] newArrayBasedList = new int[arrayBasedList.length / 2];
-			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, newArrayBasedList.length);
+			System.arraycopy(arrayBasedList, 0, newArrayBasedList, 0, size);
 			arrayBasedList = newArrayBasedList;
 		}
 	}
