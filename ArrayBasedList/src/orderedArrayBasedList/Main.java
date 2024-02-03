@@ -2,12 +2,12 @@ package orderedArrayBasedList;
 
 import java.util.Random;
 
-import list.InitList;
+import list.IntList;
 
 public class Main {
 
 	public static void main(String[] args) {
-		InitList orderedArrayBasedList = new OrderedArrayBasedList();
+		IntList orderedArrayBasedList = new OrderedArrayBasedList();
 		Random random = new Random();
 		for (int i = 12; i > 0; i--) {
 			orderedArrayBasedList.add(random.nextInt(150) + 1);

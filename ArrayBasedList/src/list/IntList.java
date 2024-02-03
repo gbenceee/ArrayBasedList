@@ -1,6 +1,6 @@
 package list;
 
-public interface InitList {
+public interface IntList {
 
 	boolean add(int number);
 

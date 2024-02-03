@@ -1,8 +1,8 @@
 package orderedArrayBasedList;
 
-import list.InitList;
+import list.IntList;
 
-public class OrderedArrayBasedList implements InitList {
+public class OrderedArrayBasedList implements IntList {
 
 	private int size;
 	private int[] orderedArrayBasedList = new int[10];

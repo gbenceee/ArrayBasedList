@@ -1,8 +1,8 @@
 package arrayBasedList;
 
-import list.InitList;
+import list.IntList;
 
-public class ArrayBasedList implements InitList {
+public class ArrayBasedList implements IntList {
 
 	private int size;
 	private int[] arrayBasedList = new int[10];
